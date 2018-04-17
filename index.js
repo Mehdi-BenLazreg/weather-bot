@@ -1,12 +1,27 @@
 var builder = require('botbuilder'); var restify = require('restify'); 
 var apiairecognizer = require('api-ai-recognizer'); 
 var request = require('request'); 
-//========================================================= // Bot Setup //========================================================= // Setup Restify Server 
-var server = restify.createServer(); 
-server.listen(process.env.port || process.env.PORT || 3978, function () { console.log('%s listening to %s', server.name, server.url); }); 
-// Create chat bot 
-var connector = new builder.ChatConnector({ appId: '3c5b679a-c3a1-453c-8999-9dd55465c793', appPassword: 'aGA8683:]nfamgmNTCTF8{*' });
+
+var MICROSOFT_APP_ID = '3c5b679a-c3a1-453c-8999-9dd55465c793';
+var MICROSOFT_APP_PASSWORD = 'aGA8683:]nfamgmNTCTF8{*';
+
+// Setup Restify Server
+var server = restify.createServer();
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+   console.log('%s listening to %s', server.name, server.url);
+});
+
+// Create chat connector for communicating with the Bot Framework Service
+var connector = new builder.ChatConnector({
+    appId: MICROSOFT_APP_ID,
+    appPassword: MICROSOFT_APP_PASSWORD
+});
+
 var bot = new builder.UniversalBot(connector);
+// Listen for messages from users
+server.post('/api/messages', connector.listen());
+
+
 var recognizer = new apiairecognizer('edabd29d42974a88a290f7fea861611b');
 var request = require('request');
 var intents = new builder.IntentDialog({ recognizers: [recognizer] }); 
