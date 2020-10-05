@@ -2,8 +2,8 @@ var builder = require('botbuilder'); var restify = require('restify');
 var apiairecognizer = require('api-ai-recognizer'); 
 var request = require('request'); 
 
-var MICROSOFT_APP_ID = '3c5b679a-c3a1-453c-8999-9dd55465c793';
-var MICROSOFT_APP_PASSWORD = 'aGA8683:]nfamgmNTCTF8{*';
+process.env.MICROSOFT_APP_ID
+process.env.MICROSOFT_APP_PASSWORD
 
 // Setup Restify Server
 var server = restify.createServer();
